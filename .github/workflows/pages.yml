@@ -1,4 +1,4 @@
-name: Deploy NusaSec public site to GitHub Pages
+name: Deploy NusaSec preview to GitHub Pages
 
 on:
   push:
@@ -21,17 +21,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare static preview
+      - name: Prepare complete frontend preview
         shell: bash
         run: |
           set -euo pipefail
           rm -rf _site
           mkdir -p _site
           cp -R site/. _site/
+          cp -R web _site/web
+          cp -R login _site/login
+          if [ -d internal ]; then cp -R internal _site/internal; fi
+          if [ -d design ]; then cp -R design _site/design; fi
+          if [ -d shared ]; then cp -R shared _site/shared; fi
 
-          # GitHub Pages may serve this artifact at either the repository
-          # sub-path (/NusaSec/) or a root site. Use relative URLs for the
-          # public-site assets/pages so the preview works in both cases.
+          # Keep source code untouched; only rewrite paths in the temporary
+          # Pages artifact so repository-subpath URLs resolve correctly.
           find _site -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
             | xargs -0 sed -i \
                 -e 's#href="/site/#href="./#g' \
@@ -39,9 +43,19 @@ jobs:
                 -e "s#href='/site/#href='./#g" \
                 -e "s#src='/site/#src='./#g"
 
-          # Keep the preview self-contained. Authentication/API links remain
-          # pointed at the real NusaSec server paths and are intentionally not
-          # replaced with fake/static endpoints.
+          find _site/web -maxdepth 2 -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
+            | xargs -0 sed -i \
+                -e 's#href="/web/#href="./#g' \
+                -e 's#src="/web/#src="./#g' \
+                -e "s#href='/web/#href='./#g" \
+                -e "s#src='/web/#src='./#g"
+
+          find _site -maxdepth 2 -type f \( -name '*.html' -o -name '*.js' \) -print0 \
+            | xargs -0 sed -i \
+                -e 's#href="/login/#href="./login/#g' \
+                -e 's#href="/web/#href="./web/#g' \
+                -e 's#href="/internal/#href="./internal/#g'
+
           touch _site/.nojekyll
 
       - name: Setup Pages
