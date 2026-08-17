@@ -1,2 +1,4 @@
-async function api(path, options={}) { const r=await fetch(`/api${path}`, {...options, credentials:'include', headers:{'Content-Type':'application/json',...(options.headers||{})}}); if(!r.ok) throw new Error(`API ${r.status}`); return r.status===204?null:r.json(); }
-window.NusaSecInternal={api};
+const state={apiBase:(window.NUSASEC_API_BASE||localStorage.getItem('nusasec_api_base')||'').replace(/\/$/,'')};
+function resolveApi(path){const n=path.startsWith('/')?path:`/${path}`;if(n==='/health'||n.startsWith('/health?'))return `${state.apiBase}${n}`;if(n.startsWith('/api/'))return `${state.apiBase}${n}`;if(n.startsWith('/v1/'))return `${state.apiBase}/api${n}`;return `${state.apiBase}/api/v1${n}`;}
+async function api(path,options={}){const url=resolveApi(path);const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),options.timeout||7000);try{const headers={...(options.body?{'Content-Type':'application/json'}:{}),...(options.headers||{})};const r=await fetch(url,{...options,credentials:'include',headers,signal:options.signal||controller.signal});if(!r.ok){const e=new Error(`API ${r.status}`);e.status=r.status;throw e}return r.status===204?null:r.json()}finally{clearTimeout(timer)}}
+window.NusaSecInternal={api,state,resolveApi};
