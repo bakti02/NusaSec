@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="./design-tokens.css">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./module.css">
+  <link rel="stylesheet" href="./attack-surface.css">
 </head>
 <body>
 <div class="shell">
@@ -40,7 +41,7 @@
   document.querySelectorAll('[data-module-link]').forEach(a => { if (a.dataset.moduleLink === key) a.classList.add('active'); });
   const root = document.getElementById('module-root');
   if (key === 'attack') {
-    const s = document.createElement('script'); s.src = './attack-surface.js'; root.innerHTML = '<div id="module-root-placeholder"></div>'; document.body.appendChild(s);
+    const s = document.createElement('script'); s.src = './attack-surface.js'; root.innerHTML = ''; document.body.appendChild(s);
   } else {
     import('./views/modules.js').then(({renderModule}) => renderModule(key, root).then(() => { const h=root.querySelector('h1'); if(h) document.getElementById('crumb').textContent=h.textContent; }));
   }
