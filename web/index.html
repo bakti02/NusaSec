@@ -1,1 +1,86 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NusaSec — Control Tower</title><link rel="stylesheet" href="/web/styles.css"></head><body><div class="shell"><aside class="sidebar"><div class="brand">NusaSec</div><nav class="nav"><a class="active" href="/web/">Dashboard</a><a href="/web/products.html">Products</a><a href="/web/billing.html">Billing</a><a href="/login/" data-action="logout">Log out</a></nav></aside><main class="main"><h1>Control Tower</h1><p class="muted">Customer security operations overview.</p><section class="grid grid-3"><div class="card"><strong>Risk</strong><h2>Low</h2><p class="muted">Current assessed exposure</p></div><div class="card"><strong>Assets</strong><h2>0</h2><p class="muted">Connected assets</p></div><div class="card"><strong>Alerts</strong><h2>0</h2><p class="muted">Open alerts</p></div></section></main></div><script type="module" src="/web/app.js"></script></body></html>
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NusaSec — Control Tower</title>
+<link rel="stylesheet" href="/web/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">Nusa<span>Sec</span><small>CONTROL TOWER</small></div>
+    <div class="workspace"><span class="dot"></span><div><b>Acme Security</b><small>Production workspace</small></div><span class="chev">⌄</span></div>
+    <nav class="nav">
+      <small class="nav-label">MONITOR</small>
+      <a class="active" href="/web/" data-view="overview"><span>⌂</span>Overview</a>
+      <a href="#" data-view="attack"><span>◌</span>Attack Surface</a>
+      <a href="#" data-view="threat"><span>◈</span>Threat Intelligence</a>
+      <a href="#" data-view="vuln"><span>△</span>Vulnerabilities</a>
+      <small class="nav-label">OPERATE</small>
+      <a href="#" data-view="monitor"><span>◉</span>Monitoring</a>
+      <a href="#" data-view="incidents"><span>!</span>Incidents <em>3</em></a>
+      <a href="#" data-view="compliance"><span>✓</span>Compliance</a>
+      <small class="nav-label">SYSTEM</small>
+      <a href="/web/products.html"><span>□</span>Products</a>
+      <a href="/web/billing.html"><span>◇</span>Billing</a>
+    </nav>
+    <div class="sidebar-bottom"><a href="#">Documentation</a><a href="/login/" data-action="logout">Log out</a></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="crumb"><span>Workspace</span><b>/</b><strong>Overview</strong></div>
+      <div class="top-actions"><button class="icon-btn" aria-label="Notifications">◌<i></i></button><div class="avatar">NS</div></div>
+    </header>
+
+    <div class="content">
+      <section class="page-head">
+        <div><div class="eyebrow">SECURITY OPERATIONS</div><h1>Good evening, team.</h1><p>Here is what needs your attention across the security environment.</p></div>
+        <div class="head-actions"><span class="core-status"><i></i> NusaSec Core connected</span><button class="btn primary">Run assessment <span>→</span></button></div>
+      </section>
+
+      <section class="posture card">
+        <div class="posture-main">
+          <div class="section-kicker">SECURITY POSTURE</div>
+          <div class="score-row"><strong>82</strong><span>/100</span><b>+4.2% <small>vs last week</small></b></div>
+          <p>Your security posture is <strong>healthy</strong>. Four critical findings require action.</p>
+          <div class="score-line"><i></i></div>
+          <div class="score-legend"><span><i class="green"></i>Healthy</span><span><i class="amber"></i>Needs attention</span><span><i class="red"></i>Critical</span></div>
+        </div>
+        <div class="posture-side"><div><span>Last assessed</span><b>2 min ago</b></div><div><span>Assets monitored</span><b>1,284</b></div><div><span>Coverage</span><b>94%</b></div></div>
+      </section>
+
+      <section class="metrics">
+        <article class="metric card"><span>CRITICAL FINDINGS</span><strong>06</strong><b class="down">−12.3%</b><small>vs previous 7 days</small></article>
+        <article class="metric card"><span>OPEN ALERTS</span><strong>18</strong><b class="down">−8.1%</b><small>12 resolved today</small></article>
+        <article class="metric card"><span>EXPOSED SERVICES</span><strong>37</strong><b class="up">+3</b><small>newly discovered</small></article>
+        <article class="metric card"><span>COMPLIANCE</span><strong>91%</strong><b class="up">+2.6%</b><small>policy coverage</small></article>
+      </section>
+
+      <section class="grid-two">
+        <article class="card chart-card"><div class="card-head"><div><span class="section-kicker">RISK TREND</span><h2>Exposure over time</h2></div><select><option>Last 30 days</option><option>Last 7 days</option></select></div><div class="chart"><div class="y-labels"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div><svg viewBox="0 0 720 230" preserveAspectRatio="none" aria-label="Risk trend chart"><defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#0b8f68" stop-opacity=".18"/><stop offset="1" stop-color="#0b8f68" stop-opacity="0"/></linearGradient></defs><path d="M0 160 C45 155 60 170 105 142 S160 151 205 122 S260 136 300 105 S350 112 390 96 S445 112 485 78 S535 88 580 70 S625 77 670 44 S700 52 720 35 L720 230 L0 230Z" fill="url(#area)"/><path d="M0 160 C45 155 60 170 105 142 S160 151 205 122 S260 136 300 105 S350 112 390 96 S445 112 485 78 S535 88 580 70 S625 77 670 44 S700 52 720 35" fill="none" stroke="#0b8f68" stroke-width="3" vector-effect="non-scaling-stroke"/></svg><div class="x-labels"><span>18 Jul</span><span>25 Jul</span><span>01 Aug</span><span>08 Aug</span><span>15 Aug</span></div></div></article>
+        <article class="card distribution"><div class="card-head"><div><span class="section-kicker">FINDINGS</span><h2>By severity</h2></div><a href="#">View all →</a></div><div class="donut-wrap"><div class="donut"><b>37</b><small>findings</small></div><div class="severity"><p><i class="sev critical"></i><span>Critical</span><b>6</b></p><p><i class="sev high"></i><span>High</span><b>11</b></p><p><i class="sev medium"></i><span>Medium</span><b>14</b></p><p><i class="sev low"></i><span>Low</span><b>6</b></p></div></div></article>
+      </section>
+
+      <section class="card attention"><div class="card-head"><div><span class="section-kicker">PRIORITIZED ACTION</span><h2>What needs attention</h2><p>Actions ranked by exposure and potential impact.</p></div><a href="#">Open findings →</a></div><div class="finding-list">
+        <a class="finding" href="#"><span class="sev-dot critical"></span><div><b>Public API exposes vulnerable package</b><small>api.nusasec.example · CVE-2026-1847 · discovered 12 min ago</small></div><strong>Critical</strong><span class="finding-arrow">→</span></a>
+        <a class="finding" href="#"><span class="sev-dot high"></span><div><b>Admin identity has excessive privileges</b><small>iam-prod · Identity policy · discovered 28 min ago</small></div><strong>High</strong><span class="finding-arrow">→</span></a>
+        <a class="finding" href="#"><span class="sev-dot high"></span><div><b>Internet-facing service missing protection</b><small>portal-prod · Attack surface · discovered 1 hr ago</small></div><strong>High</strong><span class="finding-arrow">→</span></a>
+      </div></section>
+
+      <section class="grid-two lower">
+        <article class="card engine-card"><div class="card-head"><div><span class="section-kicker">NUSASEC CORE</span><h2>Engine health</h2></div><span class="healthy">All systems operational</span></div><div class="engine-list"><div><span>Attack Surface</span><i><b></b></i><strong>100%</strong></div><div><span>Threat Intelligence</span><i><b></b></i><strong>98%</strong></div><div><span>Vulnerability</span><i><b></b></i><strong>96%</strong></div><div><span>Monitoring</span><i><b></b></i><strong>100%</strong></div><div><span>Incident Response</span><i><b></b></i><strong>94%</strong></div><div><span>Compliance</span><i><b></b></i><strong>91%</strong></div></div></article>
+        <article class="card activity"><div class="card-head"><div><span class="section-kicker">ACTIVITY</span><h2>Recent events</h2></div><a href="#">See all →</a></div><div class="timeline"><div><i class="ok"></i><p><b>Assessment completed</b><small>Attack Surface · 2 min ago</small></p></div><div><i class="warn"></i><p><b>High-risk finding created</b><small>Vulnerability · 12 min ago</small></p></div><div><i class="info"></i><p><b>Threat intelligence updated</b><small>1,284 indicators · 31 min ago</small></p></div><div><i class="ok"></i><p><b>Policy check passed</b><small>Compliance · 48 min ago</small></p></div></div></article>
+      </section>
+
+      <footer class="footer"><span>NusaSec Control Tower · v0.1</span><span>Data refreshes continuously when Core is connected.</span></footer>
+    </div>
+  </main>
+</div>
+<script type="module" src="/web/app.js"></script>
+<script>
+document.querySelectorAll('[data-view]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.querySelectorAll('[data-view]').forEach(x=>x.classList.remove('active'));a.classList.add('active');document.querySelector('.crumb strong').textContent=a.textContent.trim()}));
+</script>
+</body>
+</html>
