@@ -1,1 +1,46 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NusaSec — Module</title><link rel="stylesheet" href="/web/styles.css"><link rel="stylesheet" href="/web/module.css"></head><body><div class="shell"><aside class="sidebar"><div class="brand">Nusa<span>Sec</span><small>CONTROL TOWER</small></div><div class="workspace"><span class="dot"></span><div><b>Acme Security</b><small>Production workspace</small></div></div><nav class="nav"><small class="nav-label">MONITOR</small><a href="/web/">⌂ Overview</a><a data-module-link="attack" href="?view=attack">◌ Attack Surface</a><a data-module-link="threat" href="?view=threat">◈ Threat Intelligence</a><a data-module-link="vuln" href="?view=vuln">△ Vulnerabilities</a><small class="nav-label">OPERATE</small><a data-module-link="monitor" href="?view=monitor">◉ Monitoring</a><a data-module-link="incidents" href="?view=incidents">! Incidents</a><a data-module-link="compliance" href="?view=compliance">✓ Compliance</a><small class="nav-label">SYSTEM</small><a href="/web/products.html">□ Products</a><a href="/web/billing.html">◇ Billing</a></nav><div class="sidebar-bottom"><a href="#">Documentation</a><a href="/login/">Log out</a></div></aside><main class="main"><header class="topbar"><div class="crumb"><span>Workspace</span><b>/</b><strong id="crumb">Module</strong></div><div class="top-actions"><button class="icon-btn">◌</button><div class="avatar">NS</div></div></header><div class="content" id="module-root"></div></main></div><script type="module">import {renderModule} from './views/modules.js'; const params=new URLSearchParams(location.search); const key=params.get('view')||'attack'; document.querySelectorAll('[data-module-link]').forEach(a=>{if(a.dataset.moduleLink===key)a.classList.add('active')}); const root=document.getElementById('module-root'); renderModule(key,root).then(()=>{const h=root.querySelector('h1'); if(h)document.getElementById('crumb').textContent=h.textContent; root.addEventListener('click',e=>{const b=e.target.closest('[data-refresh-module]'); if(b){e.preventDefault();renderModule(key,root)}})});</script></body></html>
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NusaSec — Module</title>
+  <link rel="stylesheet" href="./design-tokens.css">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./module.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">Nusa<span>Sec</span><small>CONTROL TOWER</small></div>
+    <div class="workspace"><span class="dot"></span><div><b>Acme Security</b><small>Production workspace</small></div></div>
+    <nav class="nav">
+      <small class="nav-label">MONITOR</small>
+      <a href="./">⌂ Overview</a>
+      <a data-module-link="attack" href="?view=attack">◌ Attack Surface</a>
+      <a data-module-link="threat" href="?view=threat">◈ Threat Intelligence</a>
+      <a data-module-link="vuln" href="?view=vuln">△ Vulnerabilities</a>
+      <small class="nav-label">OPERATE</small>
+      <a data-module-link="monitor" href="?view=monitor">◉ Monitoring</a>
+      <a data-module-link="incidents" href="?view=incidents">! Incidents</a>
+      <a data-module-link="compliance" href="?view=compliance">✓ Compliance</a>
+      <small class="nav-label">SYSTEM</small>
+      <a href="./products.html">□ Products</a>
+      <a href="./billing.html">◇ Billing</a>
+    </nav>
+    <div class="sidebar-bottom"><a href="#">Documentation</a><a href="../login/">Log out</a></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div class="crumb"><span>Workspace</span><b>/</b><strong id="crumb">Module</strong></div><div class="top-actions"><button class="icon-btn">◌</button><div class="avatar">NS</div></div></header>
+    <div class="content" id="module-root"></div>
+  </main>
+</div>
+<script type="module">
+  import {renderModule} from './views/modules.js';
+  const params=new URLSearchParams(location.search);
+  const key=params.get('view')||'attack';
+  document.querySelectorAll('[data-module-link]').forEach(a=>{if(a.dataset.moduleLink===key)a.classList.add('active')});
+  const root=document.getElementById('module-root');
+  renderModule(key,root).then(()=>{const h=root.querySelector('h1');if(h)document.getElementById('crumb').textContent=h.textContent;root.addEventListener('click',e=>{const b=e.target.closest('[data-refresh-module]');if(b){e.preventDefault();renderModule(key,root)}})});
+</script>
+</body>
+</html>
