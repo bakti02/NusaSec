@@ -50,21 +50,21 @@ jobs:
           find _site/web -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
             | xargs -0 sed -i \
                 -e 's#href="/web/#href="./#g' \
-                -e 'src="/web/#src="./#g' \
-                -e 'href="/login/#href="../login/#g' \
-                -e 'href="/internal/#href="../internal/#g'
+                -e 's#src="/web/#src="./#g' \
+                -e 's#href="/login/#href="../login/#g' \
+                -e 's#href="/internal/#href="../internal/#g'
 
           find _site/login -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
             | xargs -0 sed -i \
                 -e 's#href="/web/#href="../web/#g' \
-                -e 'href="/site/#href="../#g'
+                -e 's#href="/site/#href="../#g'
 
           if [ -d _site/internal ]; then
             find _site/internal -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
               | xargs -0 sed -i \
                   -e 's#href="/internal/#href="./#g' \
-                  -e 'src="/internal/#src="./#g' \
-                  -e 'href="/login/#href="../login/#g'
+                  -e 's#src="/internal/#src="./#g' \
+                  -e 's#href="/login/#href="../login/#g'
           fi
 
           touch _site/.nojekyll
