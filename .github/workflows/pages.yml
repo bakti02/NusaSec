@@ -29,15 +29,15 @@ jobs:
           mkdir -p _site
           cp -R site/. _site/
 
-          # The production site lives under /site when served by the NusaSec
-          # reference server. For this isolated GitHub Pages preview, stage
-          # a copy at the domain root without modifying the source files.
+          # GitHub Pages may serve this artifact at either the repository
+          # sub-path (/NusaSec/) or a root site. Use relative URLs for the
+          # public-site assets/pages so the preview works in both cases.
           find _site -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
             | xargs -0 sed -i \
-                -e 's#href="/site/#href="/#g' \
-                -e 's#src="/site/#src="/#g' \
-                -e 's#href=\x27/site/#href=\x27/#g' \
-                -e 's#src=\x27/site/#src=\x27/#g'
+                -e 's#href="/site/#href="./#g' \
+                -e 's#src="/site/#src="./#g' \
+                -e "s#href='/site/#href='./#g" \
+                -e "s#src='/site/#src='./#g"
 
           # Keep the preview self-contained. Authentication/API links remain
           # pointed at the real NusaSec server paths and are intentionally not
