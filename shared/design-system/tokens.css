@@ -1,0 +1,44 @@
+:root {
+  --ns-bg: #f7f9fc;
+  --ns-surface: #ffffff;
+  --ns-surface-subtle: #f1f4f8;
+  --ns-border: #d9e0e8;
+  --ns-border-strong: #bcc7d4;
+  --ns-text: #15202b;
+  --ns-text-muted: #5d6b7a;
+  --ns-text-subtle: #7b8794;
+  --ns-brand: #0f766e;
+  --ns-brand-strong: #0b5f59;
+  --ns-brand-soft: #e6f4f2;
+  --ns-critical: #c62828;
+  --ns-critical-soft: #fdecec;
+  --ns-high: #c2410c;
+  --ns-high-soft: #fff1eb;
+  --ns-medium: #a16207;
+  --ns-medium-soft: #fff8db;
+  --ns-low: #2563eb;
+  --ns-low-soft: #eaf1ff;
+  --ns-success: #1f7a4d;
+  --ns-success-soft: #e8f6ee;
+  --ns-info: #2563eb;
+  --ns-info-soft: #eaf1ff;
+  --ns-radius-sm: 8px;
+  --ns-radius-md: 12px;
+  --ns-radius-lg: 16px;
+  --ns-radius-xl: 20px;
+  --ns-shadow-sm: 0 1px 2px rgba(16,24,40,.05);
+  --ns-shadow-md: 0 8px 24px rgba(16,24,40,.08);
+  --ns-shadow-lg: 0 18px 48px rgba(16,24,40,.12);
+  --ns-space-1: 4px;
+  --ns-space-2: 8px;
+  --ns-space-3: 12px;
+  --ns-space-4: 16px;
+  --ns-space-5: 20px;
+  --ns-space-6: 24px;
+  --ns-space-8: 32px;
+  --ns-space-10: 40px;
+  --ns-space-12: 48px;
+  --ns-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--ns-font-sans); color: var(--ns-text); background: var(--ns-bg); }
