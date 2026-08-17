@@ -34,27 +34,38 @@ jobs:
           if [ -d design ]; then cp -R design _site/design; fi
           if [ -d shared ]; then cp -R shared _site/shared; fi
 
-          # Keep source code untouched; only rewrite paths in the temporary
-          # Pages artifact so repository-subpath URLs resolve correctly.
-          find _site -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
+          # Rewrite only the temporary Pages artifact. Production source files
+          # and API paths are never changed. Each directory gets paths relative
+          # to its own location so repository-subpath hosting works correctly.
+          find _site -maxdepth 1 -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
             | xargs -0 sed -i \
                 -e 's#href="/site/#href="./#g' \
                 -e 's#src="/site/#src="./#g' \
-                -e "s#href='/site/#href='./#g" \
-                -e "s#src='/site/#src='./#g"
+                -e 's#href="/web/#href="./web/#g' \
+                -e 's#href="/login/#href="./login/#g' \
+                -e 's#href="/internal/#href="./internal/#g' \
+                -e 's#href="/design/#href="./design/#g' \
+                -e 's#href="/shared/#href="./shared/#g'
 
-          find _site/web -maxdepth 2 -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
+          find _site/web -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
             | xargs -0 sed -i \
                 -e 's#href="/web/#href="./#g' \
-                -e 's#src="/web/#src="./#g' \
-                -e "s#href='/web/#href='./#g" \
-                -e "s#src='/web/#src='./#g"
+                -e 'src="/web/#src="./#g' \
+                -e 'href="/login/#href="../login/#g' \
+                -e 'href="/internal/#href="../internal/#g'
 
-          find _site -maxdepth 2 -type f \( -name '*.html' -o -name '*.js' \) -print0 \
+          find _site/login -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
             | xargs -0 sed -i \
-                -e 's#href="/login/#href="./login/#g' \
-                -e 's#href="/web/#href="./web/#g' \
-                -e 's#href="/internal/#href="./internal/#g'
+                -e 's#href="/web/#href="../web/#g' \
+                -e 'href="/site/#href="../#g'
+
+          if [ -d _site/internal ]; then
+            find _site/internal -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
+              | xargs -0 sed -i \
+                  -e 's#href="/internal/#href="./#g' \
+                  -e 'src="/internal/#src="./#g' \
+                  -e 'href="/login/#href="../login/#g'
+          fi
 
           touch _site/.nojekyll
 
