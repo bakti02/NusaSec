@@ -1,0 +1,64 @@
+name: Deploy NusaSec public site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare static preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf _site
+          mkdir -p _site
+          cp -R site/. _site/
+
+          # The production site lives under /site when served by the NusaSec
+          # reference server. For this isolated GitHub Pages preview, stage
+          # a copy at the domain root without modifying the source files.
+          find _site -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -print0 \
+            | xargs -0 sed -i \
+                -e 's#href="/site/#href="/#g' \
+                -e 's#src="/site/#src="/#g' \
+                -e 's#href=\x27/site/#href=\x27/#g' \
+                -e 's#src=\x27/site/#src=\x27/#g'
+
+          # Keep the preview self-contained. Authentication/API links remain
+          # pointed at the real NusaSec server paths and are intentionally not
+          # replaced with fake/static endpoints.
+          touch _site/.nojekyll
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
