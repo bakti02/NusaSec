@@ -1,25 +1,9 @@
-const state = { user: null, apiBase: (window.NUSASEC_API_BASE || localStorage.getItem('nusasec_api_base') || '').replace(/\/$/, '') };
-function resolveApi(path) {
-  const normalized = path.startsWith('/') ? path : `/${path}`;
-  if (normalized.startsWith('/api/')) return `${state.apiBase}${normalized}`;
-  if (normalized.startsWith('/v1/')) return `${state.apiBase}/api${normalized}`;
-  return `${state.apiBase}/api/v1${normalized}`;
-}
-async function api(path, options = {}) {
-  const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
-  const response = await fetch(resolveApi(path), { ...options, credentials: 'include', headers });
-  if (!response.ok) { const error = new Error(`API ${response.status}`); error.status = response.status; throw error; }
-  return response.status === 204 ? null : response.json();
-}
-function configureApiBase(value) {
-  state.apiBase = String(value || '').replace(/\/$/, '');
-  if (state.apiBase) localStorage.setItem('nusasec_api_base', state.apiBase);
-  else localStorage.removeItem('nusasec_api_base');
-}
-window.NusaSec = { api, state, resolveApi, configureApiBase };
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('[data-action="logout"]').forEach(el => el.addEventListener('click', async event => {
-    event.preventDefault();
-    try { await api('/auth/logout', { method: 'POST' }); } finally { location.href = '../login/'; }
-  }));
-});
+const state={user:null,apiBase:(window.NUSASEC_API_BASE||localStorage.getItem('nusasec_api_base')||'').replace(/\/$/,'')};
+const cache=new Map();
+function resolveApi(path){const n=path.startsWith('/')?path:`/${path}`;if(n.startsWith('/api/'))return `${state.apiBase}${n}`;if(n.startsWith('/v1/'))return `${state.apiBase}/api${n}`;return `${state.apiBase}/api/v1${n}`;}
+async function api(path,options={}){const method=(options.method||'GET').toUpperCase(),key=`${method}:${resolveApi(path)}`;if(method==='GET'&&!options.noCache&&cache.has(key)){const h=cache.get(key);if(Date.now()-h.time<30000)return h.data;}const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),options.timeout||7000);try{const headers={...(options.body?{'Content-Type':'application/json'}:{}),...(options.headers||{})};const response=await fetch(resolveApi(path),{...options,credentials:'include',headers,signal:options.signal||controller.signal});if(!response.ok){const error=new Error(`API ${response.status}`);error.status=response.status;throw error;}const data=response.status===204?null:await response.json();if(method==='GET'&&!options.noCache)cache.set(key,{time:Date.now(),data});return data;}finally{clearTimeout(timer);}}
+function prefetch(path){return api(path).catch(()=>null)}
+function configureApiBase(value){state.apiBase=String(value||'').replace(/\/$/,'');if(state.apiBase)localStorage.setItem('nusasec_api_base',state.apiBase);else localStorage.removeItem('nusasec_api_base');cache.clear()}
+function invalidate(path){for(const key of cache.keys())if(key.includes(resolveApi(path)))cache.delete(key)}
+window.NusaSec={api,state,resolveApi,configureApiBase,prefetch,invalidate,clearCache:()=>cache.clear()};
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('[data-action="logout"]').forEach(el=>el.addEventListener('click',async event=>{event.preventDefault();try{await api('/auth/logout',{method:'POST',timeout:4000,noCache:true})}finally{location.href='../login/'}}))});
