@@ -1,0 +1,31 @@
+:root {
+  --ns-font-sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ns-font-display: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ns-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --ns-bg: #f6f7f5;
+  --ns-surface: #ffffff;
+  --ns-surface-subtle: #f9faf9;
+  --ns-surface-muted: #f1f3f1;
+  --ns-ink: #111513;
+  --ns-ink-soft: #39423e;
+  --ns-muted: #68736e;
+  --ns-faint: #8d9792;
+  --ns-border: #e0e5e2;
+  --ns-border-strong: #cfd7d3;
+  --ns-green: #087f5b;
+  --ns-green-dark: #075d45;
+  --ns-green-soft: #e8f5f0;
+  --ns-lime: #b7ef65;
+  --ns-red: #c84747;
+  --ns-red-soft: #fbeded;
+  --ns-amber: #a8751f;
+  --ns-amber-soft: #fbf4e5;
+  --ns-blue: #356b9d;
+  --ns-blue-soft: #edf4fb;
+  --ns-radius-sm: 5px;
+  --ns-radius-md: 8px;
+  --ns-radius-lg: 12px;
+  --ns-shadow-sm: 0 1px 2px rgba(16, 24, 20, .04);
+  --ns-shadow-md: 0 8px 24px rgba(16, 24, 20, .06);
+  --ns-focus: 0 0 0 3px rgba(8, 127, 91, .14);
+}
