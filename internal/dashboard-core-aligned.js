@@ -1,1 +1,0 @@
-// Core-aligned internal dashboard renderer; loaded by internal/index.html via wrapper.
