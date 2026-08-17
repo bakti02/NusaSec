@@ -1,0 +1,1 @@
+(()=>{const root=document.getElementById('public-root');if(!root)return;root.querySelectorAll('[data-scroll]').forEach(a=>a.addEventListener('click',e=>{const el=document.querySelector(a.dataset.scroll);if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth'})}}));})();
